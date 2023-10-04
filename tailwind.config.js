@@ -7,7 +7,10 @@ export default {
         "borderAccordeon": "var(--cAccordeon)",
         "orangePrice": "var(--oPrice)",
         "hCard": "var(--hCard)",
-        "buttonCard" : "var(--buttonCard)"
+        "buttonCard" : "var(--buttonCard)",
+        "countAcc": "var(--countAcc)",
+        "optionAcc": "var(--optionAcc)",
+        "descriptionCard": "var(--descriptionCard)"
       },
       boxShadow: {
         "shCardOne": "var(--shCardOne)",

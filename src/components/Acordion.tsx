@@ -1,33 +1,32 @@
-import { useState, useEffect } from "react";
-// import { AvailableFilters, Categories } from "../interface/types";
+import {useState} from "react";
+import Chevron from "../icons/Chevron";
+
 function Accordion(props: {
   category: string;
   options: { id: string; name: string; count: number }[];
-  onToggle: (selectedOptions: string[]) => unknown;
+  onSelectionUpdate: (selectedOptions: string[]) => unknown;
+  selectedOptions: string[];
 }) {
-  const {onToggle} = props
+
+  const {onSelectionUpdate, selectedOptions} = props
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-     onToggle(selectedOptions)
-
-  }, [onToggle,selectedOptions]);
+ 
 
   const onOptionToggle = (id: string) => {
-    setSelectedOptions((prevState) => {
-      const isSelected = prevState.includes(id);
+      const isSelected = selectedOptions.includes(id);
       if (isSelected) {
-        return prevState.filter((option) => option !== id);
+        onSelectionUpdate(selectedOptions.filter((option) => option !== id));
       } else {
-        return [...prevState, id];
+        onSelectionUpdate([...selectedOptions, id]);
       }
-    });
   };
 
+  console.log(isOpen)
   
 
   return (
@@ -38,29 +37,14 @@ function Accordion(props: {
           onClick={toggleAccordion}
         >
           <h2 className="text-base font-bold">{props.category}</h2>
-          <svg
-            className={`w-6 h-6 transform ${
-              isOpen ? "rotate-180" : "rotate-0"
-            }`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={isOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
-            />
-          </svg>
+          <Chevron isOpen={isOpen}/>
         </div>
         {isOpen && (
-          <div className="py-5 border-b-[1px] cursor-pointer">
+          <div className="py-5 border-b-[1px] cursor-pointer ">
             {props.options.map((option) => (
               <div key={option.id} onClick={() => onOptionToggle(option.id)}>
-                <p className="text-gray-700">
-                  {option.name} <span> ({option.count})</span>
+                <p className="text-optionAcc font-medium text ">
+                  {option.name} <span className="text-countAcc"> ({option.count})</span>
                 </p>
               </div>
             ))}

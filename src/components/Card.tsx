@@ -35,7 +35,7 @@ const Card = (props: Car) => {
                         <h2 className="text-base font-bold text-left text-gray-950">
                             {getCardTitle(props.brand, props.model)}
                         </h2>
-                        <h3 className="text-left text-hCard line-clamp-2 font-normal text-sm">
+                        <h3 className="text-left text-descriptionCard  line-clamp-2  font-semibold text-sm">
                             {props.version}
                         </h3>
                     </div>

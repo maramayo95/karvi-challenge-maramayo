@@ -17,7 +17,18 @@ async function fechData(): Promise<{
       id:string;
       name: string;
       count: number;
-    }[]
+    }[];
+    year: {
+      id:string;
+      name: string;
+      count: number;
+    }[];
+    model: {
+      id:string;
+      name: string;
+      count: number;
+    }[];
+    
   };
   items:Car[]
 }> {
