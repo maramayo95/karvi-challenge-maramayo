@@ -26,7 +26,6 @@ function Accordion(props: {
       }
   };
 
-  console.log(isOpen)
   
 
   return (

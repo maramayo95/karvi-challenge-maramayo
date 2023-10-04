@@ -37,7 +37,6 @@ function App() {
     return <div>Error: {error instanceof Error}</div>;
   }
 
-  console.log(selectedFilters)
 
   
 
