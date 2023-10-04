@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: Raleway, sans-serif;-webkit-font-feature-settings: "lnum";-moz-font-feature-settings: "lnum";
+    font-feature-settings: "lnum";
+}
+
+:root {
+    --cAccordeon: #E3E5ED;
+    --oPrice: #FF7042;
+    --hCard : #5F647A;
+    --shCardOne: 0px 20px 25px 0px #00000017;
+    --shCardTwo: 0px 1px 10px 0px #00000012;
+    --buttonCard : #566DED;
+  }
