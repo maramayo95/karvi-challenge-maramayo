@@ -8,6 +8,16 @@ async function fechData(): Promise<{
       name: string;
       count: number;
     }[];
+    brand : {
+      id: string;
+      name: string;
+      count: number;
+    }[]
+    version: {
+      id:string;
+      name: string;
+      count: number;
+    }[]
   };
   items:Car[]
 }> {

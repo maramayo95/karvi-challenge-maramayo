@@ -56,7 +56,7 @@ function Accordion(props: {
           </svg>
         </div>
         {isOpen && (
-          <div className="py-5 border-b-[1px]">
+          <div className="py-5 border-b-[1px] cursor-pointer">
             {props.options.map((option) => (
               <div key={option.id} onClick={() => onOptionToggle(option.id)}>
                 <p className="text-gray-700">

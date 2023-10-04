@@ -2,6 +2,7 @@ import { Car } from "../interface/types";
 import useResize from "../hooks/useResize";
 import Parcelas from "../icons/Parcelas";
 import { currencyConvert, getCardTitle, mileageConvert } from "../utils/index";
+import Heart from "../icons/Heart";
 
 const Card = (props: Car) => {
     const { isMobile } = useResize();
@@ -11,6 +12,9 @@ const Card = (props: Car) => {
             className="relative w-full h-full max-w-full col-span-1 p-2 mb-5 bg-white  shadow-shCardOne outline-none select-none rounded-xl sm:mb-0 shadow-card-hover"
         >
             <div className="grid grid-cols-2 md:grid-cols-1">
+            <div className="absolute top-4 right-4 text-gold text-2xl cursor-pointer bg-white p-2 rounded-full">
+                <Heart/>
+            </div>
                 <div className="col-span-1">
                     <img
                         src={props.image}
