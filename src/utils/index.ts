@@ -1,9 +1,9 @@
 export const capitalize = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.toLocaleLowerCase().charAt(0).toUpperCase() + str.slice(1);
 };
 
 export const capitalizeSentence = (str: string) => {
-    return str.split(" ").map(capitalize).join(" ");
+    return str.toLocaleLowerCase().split(" ").map(capitalize).join(" ");
 };
 
 export const getCardTitle = (brand: string, model: string) => {

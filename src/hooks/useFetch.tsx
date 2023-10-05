@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { Car } from "../interface/types";
+import { Item } from "../interface/types";
 
 async function fechData(): Promise<{
   availableFilters: {
@@ -30,7 +30,7 @@ async function fechData(): Promise<{
     }[];
     
   };
-  items:Car[]
+  items:Item[]
 }> {
   const response = await fetch(import.meta.env.VITE_URL);
   if (!response.ok) {

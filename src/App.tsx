@@ -1,106 +1,133 @@
-import {  useState } from "react";
+import {  useEffect,  useState } from "react";
 import "./App.css";
 import Card from "./components/Card";
 import useFetch from "./hooks/useFetch";
 import Accordion from "./components/Acordion";
 import Spinner from "./components/Spinner";
+import Pagination from "./components/Paginator";
+import { Item } from "./interface/types";
 
 function App() {
+  const { data, isLoading, isError, error } = useFetch();
   
-  const filterToggleHandler = (selectedOptions:string[],filter: "cities" | "brands" | "version" | "model" | "year" ) => {
-    setSelectedFilters((prevState) => {
-      const newState = {...prevState}
-      newState[filter] = selectedOptions
-      return newState
-    })
+  const [filteredItems, setFilteredItems] = useState<Item[] | undefined>(undefined)
+  const [page, setPage] = useState<number>(1)
+  const itemsPerPage = 12;
+
+  const paginatedItems = () => {
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredItems?.slice(startIndex, endIndex);
   }
 
+  const itemToMap =paginatedItems()
+
   const [selectedFilters, setSelectedFilters] = useState<{
-    cities: string[];
-    brands: string[];
+    city: string[];
+    brand: string[];
     version: string[];
     model: string[];
-    year : string[];
+    year: string[];
   }>({
-    cities: [],
-    brands: [],
+    city: [],
+    brand: [],
     version: [],
     model: [],
-    year: []
+    year: [],
   });
 
-  const { data, isLoading, isError, error } = useFetch();
+  const filterToggleHandler = (
+    selectedOptions: string[],
+    filter: "city" | "brand" | "version" | "model" | "year"
+  ) => {
+    setSelectedFilters((prevState) => {
+      const newState = { ...prevState };
+      newState[filter] = selectedOptions;
+      return newState;
+    });
+  };
+
+  useEffect(
+    () => {
+      const checkFilteredItems = data?.items
+      .filter((car) => {
+        return (
+          (!selectedFilters.city.length || selectedFilters.city.includes(car.city)) &&
+          (!selectedFilters.brand.length || selectedFilters.brand.includes(car.brand)) &&
+          (!selectedFilters.version.length || selectedFilters.version.includes(car.version)) &&
+          (!selectedFilters.model.length || selectedFilters.model.includes(car.model)) &&
+          (!selectedFilters.year.length || selectedFilters.year.includes(car.year))
+        );
+      })
+      setFilteredItems(checkFilteredItems)
+    }, [data, selectedFilters]
+  )
+    console.log(selectedFilters)
   if (isLoading) {
-    return  <Spinner/>;
+    return <Spinner />;
   }
   if (isError) {
     return <div>Error: {error instanceof Error}</div>;
   }
 
+  // Calcula los índices de inicio y fin para los elementos en la página actual
+  const accordionFilters:{
+    type: "brand" | "model" | "version" | "year" | "city";
+    title:string;
+  }[] = [
+    {
+      type: "brand",
+      title: "Marca",
+    },
+    {
+      type: "model",
+      title: "Modelo",
+    },
+    {
+      type: "version",
+      title: "Versión",
+    },
+    {
+      type: "year",
+      title: "Año",
+    },
+    {
+      type: "city",
+      title: "Ciudade",
+    },
+  ];
 
-  
+  console.log(selectedFilters)
+
+  //  TODO : Para el total de autos encontrados en la busqueda filtrada  Total autos :  filteredItems
 
   return (
     <main className="m-auto w-full sm:container 2xl:max-w-screen-xl">
-   
-      <div className="grid grid-cols-5 min-h-screen">
-        <aside className="px-5 py-3 col-span-1">
-          <section>
-            <Accordion 
-              options={data?.availableFilters.brand ??[]}
-              category={"Marca"}
-              onSelectionUpdate={(selectedOptions) => filterToggleHandler(selectedOptions, 'brands')}
-              selectedOptions={selectedFilters.brands}
+      <div className="flex ">
+        <aside className="px-5 py-3 max-w-[25%] w-full relative">
+          <section className="absolute w-full max-w-[calc(100%-40px)]">
+            {
+              accordionFilters.map(({type,title}) => (
+                <Accordion key={title}
+                options={data?.availableFilters[type] ?? []}
+                category={title}
+                onSelectionUpdate={(selectedOptions) =>
+                  filterToggleHandler(selectedOptions, type)
+                }
+                selectedOptions={selectedFilters[type]}
               />
-              <Accordion 
-                options={data?.availableFilters.model ??[]}
-                category={"Modelo"}
-                onSelectionUpdate={(selectedOptions) => filterToggleHandler(selectedOptions, 'model')}
-                selectedOptions={selectedFilters.model}
-                />
-              <Accordion 
-                options={data?.availableFilters.version ??[]}
-                category={"Version"}
-                onSelectionUpdate={(selectedOptions) => filterToggleHandler(selectedOptions, 'version')}
-                selectedOptions={selectedFilters.version}
-                />
-                <Accordion 
-                  options={data?.availableFilters.year ??[]}
-                  category={"Año"}
-                  onSelectionUpdate={(selectedOptions) => filterToggleHandler(selectedOptions, 'year')}
-                  selectedOptions={selectedFilters.year}
-                  />
-            <Accordion
-              options={data?.availableFilters.city ?? []}
-              category={"Cidade"}
-              onSelectionUpdate={(selectedOptions) => filterToggleHandler(selectedOptions, 'cities')}
-              selectedOptions={selectedFilters.cities}
-            />
+              ))
+            }
+    
           </section>
         </aside>
 
-        <section className="px-5 grid col-span-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 sm:gap-4">
-          {data?.items
-            .filter((car) => {
-              if (
-                (selectedFilters.cities.length > 0 &&
-                !selectedFilters.cities.includes(car.city)) ||
-               ( selectedFilters.brands.length > 0 &&
-               !selectedFilters.brands.includes(car.brand)) ||
-               ( selectedFilters.version.length > 0 &&
-                !selectedFilters.version.includes(car.version)) ||
-                ( selectedFilters.model.length > 0 &&
-                  !selectedFilters.model.includes(car.model)) ||
-                  ( selectedFilters.year.length > 0 &&
-                    !selectedFilters.year.includes(car.year))
-              ) {
-                return false;
-              }
-              return true;
-            })
-            .map((car) => (
+           
+        <section className="flex flex-wrap gap-4 px-5 w-full ">
+          {itemToMap?.map((car) => (
               <Card key={car.id} {...car} />
             ))}
+        <Pagination items={filteredItems} itemsPerPage={itemsPerPage} onPageChange={setPage} />
         </section>
       </div>
     </main>

@@ -1,47 +1,63 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
-interface PaginationOptions {
-  itemsPerPage: number;
-  totalItems: number;
-}
+const usePagination = () => {
+  const [pagination, setPagination] = useState<{
+    items: number,
+    itemsPerPage: number,
+    currentPage: number,
+    totalPages: number,
+    pageNumbers: number[]
+  }>({
+    items: 100, // TODO: Ver cómo pasar data
+    itemsPerPage: 12,
+    currentPage: 1,
+    totalPages: 1,
+    pageNumbers: [1]
+  });
 
-interface PaginationState {
-  currentPage: number;
-  totalPages: number;
-  goToPage: (page: number) => void;
-  nextPage: () => void;
-  prevPage: () => void;
-}
+  useEffect(() => {
+    const totalPages = Math.ceil(pagination.items / pagination.itemsPerPage);
+    const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-const usePagination = ({ itemsPerPage, totalItems }: PaginationOptions): PaginationState => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  const goToPage = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      totalPages,
+      pageNumbers,
+    }));
+  }, [pagination.items, pagination.itemsPerPage]);
 
   const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+    if (pagination.currentPage < pagination.totalPages) {
+      setPagination((prevPagination) => ({
+        ...prevPagination,
+        currentPage: prevPagination.currentPage + 1,
+      }));
     }
   };
 
   const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    if (pagination.currentPage > 1) {
+      setPagination((prevPagination) => ({
+        ...prevPagination,
+        currentPage: prevPagination.currentPage - 1,
+      }));
+    }
+  };
+
+  const goToPage = (pageNumber: number) => {
+    if (pageNumber >= 1 && pageNumber <= pagination.totalPages) {
+      setPagination((prevPagination) => ({
+        ...prevPagination,
+        currentPage: pageNumber,
+      }));
     }
   };
 
   return {
-    currentPage,
-    totalPages,
-    goToPage,
     nextPage,
     prevPage,
+    goToPage,
+    pagination,
   };
 };
 

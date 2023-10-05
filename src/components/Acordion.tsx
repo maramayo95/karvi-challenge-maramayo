@@ -1,5 +1,6 @@
 import {useState} from "react";
 import Chevron from "../icons/Chevron";
+import { capitalizeSentence } from "../utils";
 
 function Accordion(props: {
   category: string;
@@ -41,9 +42,9 @@ function Accordion(props: {
         {isOpen && (
           <div className="py-5 border-b-[1px] cursor-pointer ">
             {props.options.map((option) => (
-              <div key={option.id} onClick={() => onOptionToggle(option.id)}>
+              <div key={option.id} className="py-3" onClick={() => onOptionToggle(option.id)}>
                 <p className="text-optionAcc font-medium text ">
-                  {option.name} <span className="text-countAcc"> ({option.count})</span>
+                  {capitalizeSentence(option.name)} <span className="text-countAcc"> ({option.count})</span>
                 </p>
               </div>
             ))}

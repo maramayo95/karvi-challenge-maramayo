@@ -1,162 +1,130 @@
-// Interfaz para tipar las Cards
-
-export interface Cars {
-  cars: Car[];
-  totalPageCount: number;
-  totalCarsCount: number;
-  page: number;
-  pageSize: number;
-}
-
-export interface Car {
-  id: number;
-  city: string;
-  state: string;
-  year: string;
-  brand: string;
-  model: string;
-  version: string;
-  price: number;
-  mileage: number;
-  image: string;
-  certificate: boolean;
-  promoted: boolean;
-  booking: boolean;
-  financing: boolean;
-  carType: string;
-  rates: Rates;
-}
-
-export interface Rates {
-  month12: Month12;
-  month24: Month24;
-  month36: Month36;
-  month48: Month48;
-  month60: Month60;
-}
-
-export interface Month12 {
-  months: number;
-  value: number;
-}
-
-export interface Month24 {
-  months: number;
-  value: number;
-}
-
-export interface Month36 {
-  months: number;
-  value: number;
-}
-
-export interface Month48 {
-  months: number;
-  value: number;
-}
-
-export interface Month60 {
-  months: number;
-  value: number;
-}
-
-  
-  export interface Filters {
-    availableFilters: AvailableFilters;
-}
-
-export interface AvailableFilters {
-    state?:            Armored[];
-    city?:             City[];
-    brand?:            Armored[];
-    model?:            Armored[];
-    version?:          Armored[];
-    year?:             Year[];
-    price?:            Mileage[];
-    minAndMaxPrice?:   MinAndMaxPrice[];
-    minAndMaxMileage?: unknown[];
-    mileage?:          Mileage[];
-    optionals?:        Armored[];
-    transmission?:     Armored[];
-    armored?:          Armored[];
-    fuel?:             Armored[];
-    color?:            Armored[];
-    plateEndings?:     Armored[];
-    bodyType?:         Armored[];
-    ratesMonth?:       null;
-    ratesValue?:       null;
-    certificate?:      Armored[];
-    financing?:        Armored[];
-}
-
-export interface Armored {
-    id:       string;
-    name:     string;
-    count:    number;
-    subAggs?: ArmoredSubAggs;
-    slug?:    Slug;
-}
-
-export enum Slug {
-    SaoPaulo = "sao-paulo",
-}
-
-export interface ArmoredSubAggs {
-    hexa?:  string;
-    brand?: string;
-}
-
-export interface City {
-    id:      string;
-    name:    string;
-    slug:    string;
-    count:   number;
-    subAggs: CitySubAggs;
-}
-
-export interface CitySubAggs {
-    state:     State;
-    stateSlug: Slug;
-}
-
-export enum State {
-    SãoPaulo = "São Paulo",
-}
-
-export interface Mileage {
-    id:  number;
-    min: number;
-    max: number | null;
-}
-
-export interface MinAndMaxPrice {
-    id:   string;
-    name: string;
-    min:  number;
-    max:  number;
-}
-
-export interface Year {
-    id:    number;
-    name:  number;
-    count: number;
-}
-
-
-export interface Item {
-  id: string;
-  name: string;
-  count: number;
-  subAggs?: {
-    state?: string;
-    stateSlug?: string;
-  };
-  slug?: string;
-}
-
-export interface CategoryAccordionProps {
-  category: string;
-  data: Item[];
-}
-
+export interface APIRequest {
+  availableFilters: AvailableFilters;
+  items:            Item[];
+  page:             number;
+  pageSize:         number;
+  totalCount:       number;
+  totalPages:       number;
+ }
  
+ export interface AvailableFilters {
+  armored:          Armored[];
+  bodyType:         Armored[];
+  brand:            Armored[];
+  certificate:      Armored[];
+  city:             CityElement[];
+  color:            Armored[];
+  financing:        Armored[];
+  fuel:             Armored[];
+  mileage:          Mileage[];
+  minAndMaxMileage: unknown[];
+  minAndMaxPrice:   MinAndMaxPrice[];
+  model:            Armored[];
+  optionals:        Armored[];
+  plateEndings:     Armored[];
+  price:            Mileage[];
+  ratesMonth:       null;
+  ratesValue:       null;
+  state:            Armored[];
+  transmission:     Armored[];
+  version:          Armored[];
+  year:             Year[];
+ }
+ 
+ export interface Armored {
+  count:    number;
+  id:       string;
+  name:     string;
+  slug?:    Slug;
+  subAggs?: ArmoredSubAggs;
+ }
+ 
+ export enum Slug {
+  SaoPaulo = "sao-paulo",
+ }
+ 
+ export interface ArmoredSubAggs {
+  brand?: string;
+  hexa?:  string;
+ }
+ 
+ export interface CityElement {
+  count:   number;
+  id:      string;
+  name:    string;
+  slug:    string;
+  subAggs: CitySubAggs;
+ }
+ 
+ export interface CitySubAggs {
+  state:     CityEnum;
+  stateSlug: Slug;
+ }
+ 
+ export enum CityEnum {
+  Campinas = "Campinas",
+  Paulínia = "Paulínia",
+  SantoAndré = "Santo André",
+  Sumaré = "Sumaré",
+  SãoJoséDOSCampos = "São José dos Campos",
+  SãoPaulo = "São Paulo",
+ }
+ 
+ export interface Mileage {
+  id:  number;
+  max: number | null;
+  min: number;
+ }
+ 
+ export interface MinAndMaxPrice {
+  id:   string;
+  max:  number;
+  min:  number;
+  name: string;
+ }
+ 
+ export interface Year {
+  count: number;
+  id:    number;
+  name:  number;
+ }
+ 
+ export interface Item {
+  booking:     boolean;
+  brand:       string;
+  carType:     CarType;
+  certificate: boolean;
+  city:        CityEnum;
+  financing:   boolean;
+  id:          number;
+  image:       string;
+  mileage:     number;
+  model:       string;
+  price:       number;
+  promoted:    boolean;
+  rates:       Rates;
+  state:       State;
+  version:     string;
+  year:        string;
+ }
+ 
+ export enum CarType {
+  Used = "used",
+ }
+ 
+ export interface Rates {
+  month12: Month;
+  month24: Month;
+  month36: Month;
+  month48: Month;
+  month60: Month;
+ }
+ 
+ export interface Month {
+  months: number;
+  value:  number;
+ }
+ 
+ export enum State {
+  SP = "SP",
+ }
