@@ -27,18 +27,5 @@ export const currencyConvert = (value: number, locale = "br") => {
 export const mileageConvert = (value: number) =>
     value.toLocaleString("pt-BR") + " km";
 
-// TODO : VER FUNCION PARA VALORES UNICOS
-    // function getUniqueValues(key: string): string[] | undefined {
-    //     const uniqueValues = new Set<string>();
-    
-    //     // Recorrer los elementos de 'items' y agregar valores únicos a 'uniqueValues'
-    //     for (const item of data.items) {
-    //         if (item[key]) {
-    //             uniqueValues.add(item[key]);
-    //         }
-    //     }
-    
-    //     // Convertir el conjunto en un array y devolverlo
-    //     return Array.from(uniqueValues);
-    // }
+
   

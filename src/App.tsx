@@ -145,7 +145,7 @@ function App() {
 
           <section className="flex flex-wrap  px-5 w-full ">
             <div className="my-4 px-5">
-              <CloseAll onDeleteAll={handleDeleteAll}/>
+           
               <div className="my-2 flex flex-wrap gap-2">
                 {Object.keys(selectedFilters)
                   .map((filterKey) => filterKey as FilterKey)
@@ -164,10 +164,11 @@ function App() {
                   )}
               </div>
 
-              <div>
+              <div className=" w-[100%] flex justify-between">
                 <h3 className="text-descriptionCard font-bold">
                   {filteredItems?.length} carros encontrados
                 </h3>
+              <CloseAll onDeleteAll={handleDeleteAll}/>
               </div>
             </div>
             <div className=" flex flex-col justify-center md:flex-row  md:flex-wrap md:gap-4 md:px-5 md:w-full">

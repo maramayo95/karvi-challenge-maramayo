@@ -11,7 +11,8 @@ export default {
         "countAcc": "var(--countAcc)",
         "optionAcc": "var(--optionAcc)",
         "descriptionCard": "var(--descriptionCard)",
-        "buttonFilter": "var(--buttonFilter)"
+        "buttonFilter": "var(--buttonFilter)",
+        "buttonFilterFont" : "var(--buttonFilterFont)"
       },
       boxShadow: {
         "shCardOne": "var(--shCardOne)",
