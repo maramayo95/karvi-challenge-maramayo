@@ -9,9 +9,9 @@ const Card = (props: Item) => {
     return (
         <article
             role="article"
-            className="relative  max-h-[500px] max-w-full w-[32%] p-2 mb-5 bg-white  shadow-shCardOne outline-none select-none rounded-xl sm:mb-0 shadow-card-hover cursor-pointer"
+            className="relative  max-h-[500px] max-w-full md:w-[32%] p-2 mb-5 bg-white  shadow-shCardOne outline-none select-none rounded-xl sm:mb-0 shadow-card-hover cursor-pointer"
         >
-            <div className="grid grid-cols-2 md:grid-cols-1 h-full">
+            <div className="grid grid-rows-2 md:grid-cols-1 h-full">
             <div className="absolute top-4 right-4 text-gold text-2xl cursor-pointer bg-white p-2 rounded-full">
                 <Heart/>
             </div>

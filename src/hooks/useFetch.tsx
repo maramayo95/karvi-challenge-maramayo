@@ -1,42 +1,46 @@
 import { useQuery } from "react-query";
 import { Item } from "../interface/types";
 
-async function fechData(): Promise<{
+type FilterOption = {
+  id: string;
+  name: string;
+  count: number;
+};
+
+type FetchData = {
   availableFilters: {
-    city: {
-      id: string;
-      name: string;
-      count: number;
-    }[];
-    brand : {
-      id: string;
-      name: string;
-      count: number;
-    }[]
-    version: {
-      id:string;
-      name: string;
-      count: number;
-    }[];
-    year: {
-      id:string;
-      name: string;
-      count: number;
-    }[];
-    model: {
-      id:string;
-      name: string;
-      count: number;
-    }[];
-    
+    city: FilterOption[];
+    brand: FilterOption[];
+    version: FilterOption[];
+    year: FilterOption[];
+    model: FilterOption[];
   };
-  items:Item[]
-}> {
+  items: Item[];
+};
+
+async function fechData(): Promise<FetchData> {
   const response = await fetch(import.meta.env.VITE_URL);
   if (!response.ok) {
     throw new Error("Error al cargar los datos");
   }
-  return response.json();
+  const body = (await response.json()) as {
+    availableFilters: Omit<FetchData["availableFilters"], "year"> & {
+      year: { id: number; name: number; count: number }[];
+    };
+    items: FetchData["items"];
+  };
+
+  return {
+    ...body,
+    availableFilters: {
+      ...body.availableFilters,
+      year: body.availableFilters.year.map((y) => ({
+        ...y,
+        id: y.id.toString(),
+        name: y.name.toString(),
+      })),
+    },
+  };
 }
 
 function useFetch() {

@@ -12,6 +12,7 @@
     font-family: Raleway, sans-serif;-webkit-font-feature-settings: "lnum";-moz-font-feature-settings: "lnum";
     font-feature-settings: "lnum";
     
+    
 }
 
 .capitalize-first-letter {
@@ -28,4 +29,8 @@
     --countAcc : #87899C;
     --optionAcc: #1B2141;
     --descriptionCard: #1B2141;
+    --buttonFilter : #B4BEF5;
+    --buttonFilterFont: #566DED;
   }
+
+  
