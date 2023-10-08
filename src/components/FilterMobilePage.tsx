@@ -11,7 +11,8 @@ const FilterMobilePage:React.FC<FilterMobilePageProps> = ({
     selectedFilters,
     data,
     handleDeleteAll,
-    handlerDeleteFilter
+    handlerDeleteFilter,
+  
   }) => {
     
   const {isModalOpen,openModal,closeModal} = useModal()
@@ -32,7 +33,6 @@ const FilterMobilePage:React.FC<FilterMobilePageProps> = ({
        handleDeleteAll={handleDeleteAll}
        handlerDeleteFilter={handlerDeleteFilter}
        isModalOpen={isModalOpen}
-      
        closeModal={closeModal}
      />
       )}

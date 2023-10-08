@@ -16,18 +16,21 @@ const Card = (props: ItemWithFormat) => {
     "p-2",
     "mb-5",
     "bg-white",
-    "shadow-shCardOne",
     "outline-none",
     "select-none",
-    "rounded-xl",
+   
     "sm:mb-0",
-    "shadow-card-hover",
     "cursor-pointer",
     
     {
       "flex": isListFormat, 
+      "border-b-[1px]": isListFormat,
       "w-full": !isListFormat,
       "md:col-span-1": !isListFormat,
+      "shadow-shCardOne": !isListFormat,
+      "shadow-card-hover": !isListFormat,
+      "rounded-xl": !isListFormat
+
     }
   );
 
@@ -54,9 +57,11 @@ const Card = (props: ItemWithFormat) => {
     "hidden": isListFormat,
     "block": !isListFormat
   })
-   // div img = w-[40%] -> en Card list 
-   // div info = w-[60%] -> en Card List
-   // Posicionamiento del corazon top-1 right-1 -> Card List  , En el otro top-4 right-4
+
+  const flexClassPrice = classnames("flex",{
+    "pt-[10px]": !isListFormat
+  })
+ 
   return (
     <article role="article" className={articleClasses}>
       <div className={cardContent}>
@@ -94,8 +99,8 @@ const Card = (props: ItemWithFormat) => {
             </div>
           </div>
           <div>
-            <div className="mb-2">
-              <div className="pt-[10px] flex">
+            <div className={isListFormat ? "mb-0" : "mb-4"}>
+              <div className={flexClassPrice}>
                 <p className="text-orangePrice text-lg md:text-2xl font-medium">
                   {currencyConvert(props.price)}
                 </p>

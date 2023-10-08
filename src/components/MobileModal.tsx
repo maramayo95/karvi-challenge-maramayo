@@ -12,7 +12,8 @@ const MobileModal: React.FC<MobileModalProps> = ({
   handleDeleteAll,
   handlerDeleteFilter,
   isModalOpen,
-  closeModal
+  closeModal,
+
 }) => {
   const accordionFilters: {
     type: "brand" | "model" | "version" | "year" | "city";

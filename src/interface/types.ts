@@ -180,6 +180,7 @@ export type MobileModalProps = {
   data?: FetchData;
   isModalOpen?: boolean; 
   closeModal?: () => void; 
+
 };
 
 
@@ -192,6 +193,7 @@ export type FilterMobilePageProps = {
   selectedFilters: FilterSelection;
   handlerDeleteFilter: (filterKey: FilterKey, filterId: string) => void;
   data?: FetchData ;
+
 }
 
 export interface ItemWithFormat extends Item {

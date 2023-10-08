@@ -16,6 +16,7 @@ import { isMobile } from "react-device-detect";
 import CardViewIcon from "./icons/CardViewIcon";
 import FilterMobilePage from "./components/FilterMobilePage";
 import CardToggle from "./components/CardToggle";
+import List from "./icons/List";
 
 type FilterSelection = {
   city: string[];
@@ -40,6 +41,9 @@ function App() {
     undefined
   );
   const [page, setPage] = useState<number>(1);
+  
+  const [isListFormat, setListFormat] = useState(false)
+  
   const itemsPerPage = 12;
 
   const paginatedItems = () => {
@@ -49,6 +53,10 @@ function App() {
   };
 
   const itemToMap = paginatedItems();
+
+  const toggleItemView = () => {
+      setListFormat(!isListFormat);
+  }
 
   useEffect(() => {
     const checkFilteredItems = data?.items.filter((car) => {
@@ -86,6 +94,7 @@ function App() {
               data={data}
               handleDeleteAll={handleDeleteAll}
               handlerDeleteFilter={handlerDeleteFilter}
+   
             />
           ) : (
             <FilterAcordionSection
@@ -133,8 +142,8 @@ function App() {
                 </div>
                 <div className="flex items-center text-buttonFilterFont text-sm px-2 cursor-pointer">
                   {isMobile ? (
-                    <button>
-                      <CardViewIcon />
+                    <button onClick={toggleItemView}>
+                     {isListFormat? <List/> : <CardViewIcon />}
                     </button>
                   ) : (
                     <>
@@ -150,7 +159,7 @@ function App() {
 
             <div className=" flex flex-col justify-center md:flex-row  md:flex-wrap md:gap-4 md:px-5 md:w-full">
               {itemToMap?.map((car) => (
-                <CardToggle isListFormat={true} key={car.id} {...car} />
+                <CardToggle isListFormat={isListFormat} key={car.id} {...car} />
               ))}
             </div>
 
