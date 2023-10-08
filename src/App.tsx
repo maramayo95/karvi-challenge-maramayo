@@ -35,6 +35,7 @@ function App() {
     handleDeleteAll,
     filterToggleHandler,
     selectedFilters,
+    isFiltersEmpty
   } = useFilter();
   // Pagination
   const [filteredItems, setFilteredItems] = useState<Item[] | undefined>(
@@ -94,6 +95,7 @@ function App() {
               data={data}
               handleDeleteAll={handleDeleteAll}
               handlerDeleteFilter={handlerDeleteFilter}
+              isFiltersEmpty={isFiltersEmpty}
    
             />
           ) : (
@@ -107,7 +109,7 @@ function App() {
           <section className="flex flex-wrap  px-5 w-full ">
             <div className="my-4 px-5 w-full">
               <section className="flex flex-wrap px-5 w-full items-start">
-                <div className="my-2 flex flex-wrap w-[80%] gap-2">
+               { !isMobile && <div className="my-2 flex flex-wrap w-[80%] gap-2">
                   {Object.keys(selectedFilters)
                     .map((filterKey) => filterKey as FilterKey)
                     .map((filterKey) =>
@@ -123,8 +125,8 @@ function App() {
                         </div>
                       ))
                     )}
-                </div>
-                {!isMobile && (
+                </div>}
+                {!isMobile && !isFiltersEmpty  && (
                   <div className="ml-auto">
                     <CloseAll
                       title="Limpiar Filtros"

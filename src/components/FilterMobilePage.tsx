@@ -12,6 +12,7 @@ const FilterMobilePage:React.FC<FilterMobilePageProps> = ({
     data,
     handleDeleteAll,
     handlerDeleteFilter,
+    isFiltersEmpty
   
   }) => {
     
@@ -34,6 +35,7 @@ const FilterMobilePage:React.FC<FilterMobilePageProps> = ({
        handlerDeleteFilter={handlerDeleteFilter}
        isModalOpen={isModalOpen}
        closeModal={closeModal}
+       isFiltersEmpty={isFiltersEmpty}
      />
       )}
    

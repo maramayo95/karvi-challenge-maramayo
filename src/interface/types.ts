@@ -180,6 +180,7 @@ export type MobileModalProps = {
   data?: FetchData;
   isModalOpen?: boolean; 
   closeModal?: () => void; 
+  isFiltersEmpty: boolean;
 
 };
 
@@ -193,6 +194,7 @@ export type FilterMobilePageProps = {
   selectedFilters: FilterSelection;
   handlerDeleteFilter: (filterKey: FilterKey, filterId: string) => void;
   data?: FetchData ;
+  isFiltersEmpty: boolean;
 
 }
 

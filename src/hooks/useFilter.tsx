@@ -64,6 +64,8 @@ const useFilter = () => {
       return newState;
     });
   };
+   const isFiltersEmpty = Object.values(selectedFilters).every((filterValues) => filterValues.length === 0);
+
 
   return {
     handlerDeleteFilter,
@@ -71,6 +73,7 @@ const useFilter = () => {
     filterToggleHandler,
     accordionFilters,
     selectedFilters,
+    isFiltersEmpty
   };
 };
 
