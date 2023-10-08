@@ -21,7 +21,7 @@ const FilterMobilePage:React.FC<FilterMobilePageProps> = ({
   return (
     <section className='sticky top-0 bg-white py-4 z-50'>
         <div className="flex justify-evenly mt-6 ">
-            <ButtonFilterMobile icon={<Search/>} text="Buscar" onClick={()=> { console.log("Hello")}} />
+            <ButtonFilterMobile  icon={<Search/>} text="Buscar" onClick={()=> { console.log("Hello")}} />
             <ButtonFilterMobile icon={<FilterIcon/>} text="Filtrar" onClick={openModal} />
         </div>
     

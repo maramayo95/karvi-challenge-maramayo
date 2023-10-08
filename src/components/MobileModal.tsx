@@ -50,14 +50,13 @@ const MobileModal: React.FC<MobileModalProps> = ({
             <div className="bg-white  p-4 w-11/12 md:w-1/2 max-w-md rounded-lg ">
               <div className="flex justify-between w-full items-center border-b-[1px] py-3  ">
                 <h2 className="text-2xl font-bold ">Filtros</h2>
-                {!isFiltersEmpty && (
+              
                   <div className="flex gap-2">
-                    <CloseAll title="Limpiar" onDeleteAll={handleDeleteAll} />
+                    {!isFiltersEmpty && <CloseAll title="Limpiar" onDeleteAll={handleDeleteAll} /> }
                     <button className="px-2 " onClick={closeModal}>
                       <Close color="#87899C" width="25" height="25" />
                     </button>
                   </div>
-                )}
               </div>
               <div className=" flex flex-wrap mt-5  gap-2 ">
                 {Object.keys(selectedFilters)

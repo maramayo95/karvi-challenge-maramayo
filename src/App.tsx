@@ -10,7 +10,7 @@ import ButtonFilter from "./components/ButtonFilter";
 import CloseAll from "./components/CloseAll";
 import useFilter from "./hooks/useFilter";
 import FilterAcordionSection from "./components/FilterAcordionSection";
-// import Card from "./components/Card";
+
 import MaisRevIcon from "./icons/MaisRevIcon";
 import { isMobile } from "react-device-detect";
 import CardViewIcon from "./icons/CardViewIcon";
