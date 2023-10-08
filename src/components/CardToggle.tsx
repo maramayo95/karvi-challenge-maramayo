@@ -78,7 +78,6 @@ const Card = (props: ItemWithFormat) => {
           />
         </div>
 
-       {/* TODO: El mt-4 tiene que figurar solo en card-list */}
         <div className={textContentDivClass}>
           <div className="mt-4">
             <div className="flex justify-start gap-2 mb-2">

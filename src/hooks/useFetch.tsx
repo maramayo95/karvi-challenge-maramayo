@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import { FetchData } from "../interface/types";
 
-
 async function fechData(): Promise<FetchData> {
   const response = await fetch(import.meta.env.VITE_URL);
   if (!response.ok) {

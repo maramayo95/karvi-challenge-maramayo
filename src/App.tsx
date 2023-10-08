@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
 import useFetch from "./hooks/useFetch";
 
 import Spinner from "./components/Spinner";
 import Pagination from "./components/Paginator";
-import { Item } from "./interface/types";
-import ButtonFilter from "./components/ButtonFilter";
 import CloseAll from "./components/CloseAll";
 import useFilter from "./hooks/useFilter";
 import FilterAcordionSection from "./components/FilterAcordionSection";
@@ -17,16 +15,11 @@ import CardViewIcon from "./icons/CardViewIcon";
 import FilterMobilePage from "./components/FilterMobilePage";
 import CardToggle from "./components/CardToggle";
 import List from "./icons/List";
+import { accordionFilters } from "./config/filterConfig";
+import FilterList from "./components/FilterList";
 
-type FilterSelection = {
-  city: string[];
-  brand: string[];
-  version: string[];
-  model: string[];
-  year: string[];
-};
 
-type FilterKey = keyof FilterSelection;
+
 
 function App() {
   const { data, isLoading, isError, error } = useFetch();
@@ -35,16 +28,14 @@ function App() {
     handleDeleteAll,
     filterToggleHandler,
     selectedFilters,
-    isFiltersEmpty
-  } = useFilter();
+    isFiltersEmpty,
+    filteredItems,
+  } = useFilter(data);
   // Pagination
-  const [filteredItems, setFilteredItems] = useState<Item[] | undefined>(
-    undefined
-  );
   const [page, setPage] = useState<number>(1);
-  
-  const [isListFormat, setListFormat] = useState(false)
-  
+
+  const [isListFormat, setIsListFormat] = useState(false);
+
   const itemsPerPage = 12;
 
   const paginatedItems = () => {
@@ -56,26 +47,8 @@ function App() {
   const itemToMap = paginatedItems();
 
   const toggleItemView = () => {
-      setListFormat(!isListFormat);
-  }
-
-  useEffect(() => {
-    const checkFilteredItems = data?.items.filter((car) => {
-      return (
-        (!selectedFilters.city.length ||
-          selectedFilters.city.includes(car.city)) &&
-        (!selectedFilters.brand.length ||
-          selectedFilters.brand.includes(car.brand)) &&
-        (!selectedFilters.version.length ||
-          selectedFilters.version.includes(car.version)) &&
-        (!selectedFilters.model.length ||
-          selectedFilters.model.includes(car.model)) &&
-        (!selectedFilters.year.length ||
-          selectedFilters.year.includes(car.year))
-      );
-    });
-    setFilteredItems(checkFilteredItems);
-  }, [data, selectedFilters]);
+    setIsListFormat(!isListFormat);
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -90,43 +63,31 @@ function App() {
         <div className="flex flex-col md:flex-row ">
           {isMobile ? (
             <FilterMobilePage
-              filterToggleHandler={filterToggleHandler}
+              accordionFilters={accordionFilters}
+              onFilterToggle={filterToggleHandler}
               selectedFilters={selectedFilters}
-              data={data}
-              handleDeleteAll={handleDeleteAll}
-              handlerDeleteFilter={handlerDeleteFilter}
+              availableFilters={data?.availableFilters}
+              onDeleteAll={handleDeleteAll}
+              onDeleteFilter={handlerDeleteFilter}
               isFiltersEmpty={isFiltersEmpty}
-   
             />
           ) : (
             <FilterAcordionSection
-              filterToggleHandler={filterToggleHandler}
+              accordionFilters={accordionFilters}
+              onFilterToggle={filterToggleHandler}
               selectedFilters={selectedFilters}
-              data={data}
+              availableFilters={data?.availableFilters}
             />
           )}
 
           <section className="flex flex-wrap  px-5 w-full ">
             <div className="my-4 px-5 w-full">
               <section className="flex flex-wrap px-5 w-full items-start">
-               { !isMobile && <div className="my-2 flex flex-wrap w-[80%] gap-2">
-                  {Object.keys(selectedFilters)
-                    .map((filterKey) => filterKey as FilterKey)
-                    .map((filterKey) =>
-                      selectedFilters[filterKey].map((filterId) => (
-                        <div key={filterId}>
-                          {" "}
-                          <ButtonFilter
-                            id={filterId}
-                            onDeleteFilter={() =>
-                              handlerDeleteFilter(filterKey, filterId)
-                            }
-                          />
-                        </div>
-                      ))
-                    )}
-                </div>}
-                {!isMobile && !isFiltersEmpty  && (
+                {
+                  !isMobile && <FilterList classNames="my-2 flex flex-wrap w-[80%] gap-2"  selectedFilters={selectedFilters} onDeleteFilter={handlerDeleteFilter}/>
+                }
+
+                {!isMobile && !isFiltersEmpty && (
                   <div className="ml-auto">
                     <CloseAll
                       title="Limpiar Filtros"
@@ -145,7 +106,7 @@ function App() {
                 <div className="flex items-center text-buttonFilterFont text-sm px-2 cursor-pointer">
                   {isMobile ? (
                     <button onClick={toggleItemView}>
-                     {isListFormat? <List/> : <CardViewIcon />}
+                      {isListFormat ? <List /> : <CardViewIcon />}
                     </button>
                   ) : (
                     <>

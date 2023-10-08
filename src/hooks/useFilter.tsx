@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { FilterSelection } from "../interface/types";
+import { useEffect, useState } from "react";
+import { FetchData, FilterSelection, Item } from "../interface/types";
 
-const useFilter = () => {
+const useFilter = (data?: FetchData) => {
   type FilterKey = keyof FilterSelection;
   const [selectedFilters, setSelectedFilters] = useState<FilterSelection>({
     city: [],
@@ -64,8 +64,29 @@ const useFilter = () => {
       return newState;
     });
   };
-   const isFiltersEmpty = Object.values(selectedFilters).every((filterValues) => filterValues.length === 0);
+  const isFiltersEmpty = Object.values(selectedFilters).every(
+    (filterValues) => filterValues.length === 0
+  );
 
+  const [filteredItems, setFilteredItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    const checkFilteredItems = data?.items.filter((car) => {
+      return (
+        (!selectedFilters.city.length ||
+          selectedFilters.city.includes(car.city)) &&
+        (!selectedFilters.brand.length ||
+          selectedFilters.brand.includes(car.brand)) &&
+        (!selectedFilters.version.length ||
+          selectedFilters.version.includes(car.version)) &&
+        (!selectedFilters.model.length ||
+          selectedFilters.model.includes(car.model)) &&
+        (!selectedFilters.year.length ||
+          selectedFilters.year.includes(car.year))
+      );
+    });
+    setFilteredItems(checkFilteredItems ?? []);
+  }, [data, selectedFilters]);
 
   return {
     handlerDeleteFilter,
@@ -73,7 +94,8 @@ const useFilter = () => {
     filterToggleHandler,
     accordionFilters,
     selectedFilters,
-    isFiltersEmpty
+    isFiltersEmpty,
+    filteredItems,
   };
 };
 
