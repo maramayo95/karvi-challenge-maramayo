@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-// import Card from "./components/Card";
+
 import useFetch from "./hooks/useFetch";
 
 import Spinner from "./components/Spinner";
@@ -10,10 +10,12 @@ import ButtonFilter from "./components/ButtonFilter";
 import CloseAll from "./components/CloseAll";
 import useFilter from "./hooks/useFilter";
 import FilterAcordionSection from "./components/FilterAcordionSection";
-
-import Card from "./components/Card";
+// import Card from "./components/Card";
 import MaisRevIcon from "./icons/MaisRevIcon";
-import MobileModal from "./components/MobileModal";
+import { isMobile } from "react-device-detect";
+import CardViewIcon from "./icons/CardViewIcon";
+import FilterMobilePage from "./components/FilterMobilePage";
+import CardToggle from "./components/CardToggle";
 
 type FilterSelection = {
   city: string[];
@@ -76,21 +78,22 @@ function App() {
   return (
     <>
       <main className="m-auto w-full sm:container 2xl:max-w-screen-xl">
-
-        {/* TODO: Resolver handleDeleteAll y handleDeleteFilter que viene undefined */}
-        <MobileModal filterToggleHandler={filterToggleHandler}
-            selectedFilters={selectedFilters}
-            data={data}
-            handleDeleteAll={handleDeleteAll}
-            handlerDeleteFilter={handlerDeleteFilter}
-            />
-            
         <div className="flex flex-col md:flex-row ">
-          <FilterAcordionSection
-            filterToggleHandler={filterToggleHandler}
-            selectedFilters={selectedFilters}
-            data={data}
-          />
+          {isMobile ? (
+            <FilterMobilePage
+              filterToggleHandler={filterToggleHandler}
+              selectedFilters={selectedFilters}
+              data={data}
+              handleDeleteAll={handleDeleteAll}
+              handlerDeleteFilter={handlerDeleteFilter}
+            />
+          ) : (
+            <FilterAcordionSection
+              filterToggleHandler={filterToggleHandler}
+              selectedFilters={selectedFilters}
+              data={data}
+            />
+          )}
 
           <section className="flex flex-wrap  px-5 w-full ">
             <div className="my-4 px-5 w-full">
@@ -112,9 +115,14 @@ function App() {
                       ))
                     )}
                 </div>
-                <div className="ml-auto">
-                  <CloseAll title = "Limpiar Filtros" onDeleteAll={handleDeleteAll} />
-                </div>
+                {!isMobile && (
+                  <div className="ml-auto">
+                    <CloseAll
+                      title="Limpiar Filtros"
+                      onDeleteAll={handleDeleteAll}
+                    />
+                  </div>
+                )}
               </section>
 
               <div className="flex justify-between items-center">
@@ -124,25 +132,35 @@ function App() {
                   </h3>
                 </div>
                 <div className="flex items-center text-buttonFilterFont text-sm px-2 cursor-pointer">
-                  <button>
-                    <MaisRevIcon />
-                  </button>
-                  <span className="ml-1">Mais Relevantes</span>
+                  {isMobile ? (
+                    <button>
+                      <CardViewIcon />
+                    </button>
+                  ) : (
+                    <>
+                      <button>
+                        <MaisRevIcon />
+                      </button>
+                      <span className="ml-1">Mais Relevantes</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
 
             <div className=" flex flex-col justify-center md:flex-row  md:flex-wrap md:gap-4 md:px-5 md:w-full">
               {itemToMap?.map((car) => (
-                <Card key={car.id} {...car} />
+                <CardToggle isListFormat={true} key={car.id} {...car} />
               ))}
             </div>
 
-            <Pagination
-              items={filteredItems}
-              itemsPerPage={itemsPerPage}
-              onPageChange={setPage}
-            />
+            {!isMobile && (
+              <Pagination
+                items={filteredItems}
+                itemsPerPage={itemsPerPage}
+                onPageChange={setPage}
+              />
+            )}
           </section>
         </div>
       </main>

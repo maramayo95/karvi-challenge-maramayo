@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { FilterAcordionProps, FilterSelection } from "../interface/types";
+import React from "react";
+import { FilterSelection, MobileModalProps } from "../interface/types";
 import Accordion from "./Acordion";
 import CloseAll from "./CloseAll";
 import Close from "../icons/Close";
 import ButtonFilter from "./ButtonFilter";
 
-const MobileModal: React.FC<FilterAcordionProps> = ({
+const MobileModal: React.FC<MobileModalProps> = ({
   filterToggleHandler,
   selectedFilters,
   data,
   handleDeleteAll,
-  handlerDeleteFilter
+  handlerDeleteFilter,
+  isModalOpen,
+  closeModal
 }) => {
   const accordionFilters: {
     type: "brand" | "model" | "version" | "year" | "city";
@@ -38,30 +40,11 @@ const MobileModal: React.FC<FilterAcordionProps> = ({
     },
   ];
   type FilterKey = keyof FilterSelection;
- 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-
 
   return (
     <div>
-      <button
-        onClick={openModal}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md"
-      >
-        Abrir Modal
-      </button>
-
       {isModalOpen && (
-        <div className=" inset-0 flex items-center justify-center z-50">
+        <div className=" inset-0 flex items-center justify-center z-50 overflow-y-auto">
           <div className="w-full h-full bg-white flex items-center justify-center">
             <div className="bg-white  p-4 w-11/12 md:w-1/2 max-w-md rounded-lg ">
               <div className="flex justify-between w-full items-center border-b-[1px] py-3  ">

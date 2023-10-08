@@ -11,10 +11,10 @@ const Card = (props: Item) => {
       className="relative  max-h-[500px] max-w-full md:w-[32%] p-2 mb-5 bg-white  shadow-shCardOne outline-none select-none rounded-xl sm:mb-0 shadow-card-hover cursor-pointer"
     >
       <div className="grid grid-rows-3 md:grid-cols-1 h-full">
+        <div className="row-span-3 md:col-span-1">
         <div className="absolute top-4 right-4 text-gold text-2xl cursor-pointer bg-white p-2 rounded-full">
           <Heart />
         </div>
-        <div className="row-span-3 md:col-span-1">
           <img
             src={props.image}
             alt={getCardTitle(props.brand, props.model)}

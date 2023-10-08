@@ -167,3 +167,33 @@ export  type FilterAcordionProps = {
     handlerDeleteFilter?: (filterKey: FilterKey, filterId: string) => void;
     data?: FetchData ;
 }
+
+
+export type MobileModalProps = {
+  filterToggleHandler: (
+    selectedOptions: string[],
+    filter: "city" | "brand" | "version" | "model" | "year"
+  ) => unknown;
+  handleDeleteAll: () => unknown;
+  selectedFilters: FilterSelection;
+  handlerDeleteFilter: (filterKey: FilterKey, filterId: string) => void;
+  data?: FetchData;
+  isModalOpen?: boolean; 
+  closeModal?: () => void; 
+};
+
+
+export type FilterMobilePageProps = {
+  filterToggleHandler:  (
+    selectedOptions: string[],
+    filter: "city" | "brand" | "version" | "model" | "year"
+  ) => unknown;
+  handleDeleteAll: () => unknown;
+  selectedFilters: FilterSelection;
+  handlerDeleteFilter: (filterKey: FilterKey, filterId: string) => void;
+  data?: FetchData ;
+}
+
+export interface ItemWithFormat extends Item {
+  isListFormat: boolean;
+}

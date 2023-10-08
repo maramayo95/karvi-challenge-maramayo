@@ -1,122 +1,123 @@
-import React,{useState} from "react";
 import Parcelas from "../icons/Parcelas";
-import { isMobile , isDesktop } from "react-device-detect";
-import { currencyConvert, getCardTitle, mileageConvert } from "../utils";
+import { currencyConvert, getCardTitle, mileageConvert } from "../utils/index";
 import Heart from "../icons/Heart";
-import classNames from 'classnames';
-import { Item } from "../interface/types";
+import classnames from "classnames"; // Importa classnames
+import { isMobile } from "react-device-detect";
+import { ItemWithFormat } from "../interface/types";
 
-const CardToggle: React.FC<Item> = (props: Item) =>{
-  const [isListView, setIsListView] = useState(false);
+const Card = (props: ItemWithFormat) => {
+  const isListFormat = props.isListFormat;
 
-  // Función para cambiar la vista entre lista y tarjeta
-  const toggleView = () => {
-    setIsListView(!isListView);
-  };
-
-  // Clases comunes para ambas vistas
-  const commonClasses = 'relative bg-white outline-none select-none rounded-xl mb-5 p-2 shadow-shCardOne sm:mb-0 shadow-card-hover cursor-pointer';
-
-  // Clases específicas para vista de tarjeta
-  const cardClasses = classNames(
-    commonClasses,
-    'max-w-full md:w-[32%]',
+  const articleClasses = classnames(
+    "relative",
+    "max-h-[600px]",
+    "max-w-full",
+    "md:w-[32%]",
+    "p-2",
+    "mb-5",
+    "bg-white",
+    "shadow-shCardOne",
+    "outline-none",
+    "select-none",
+    "rounded-xl",
+    "sm:mb-0",
+    "shadow-card-hover",
+    "cursor-pointer",
+    
     {
-      'grid grid-cols-3 gap-4': !isListView,
-      'md:hidden': isListView,
+      "flex": isListFormat, 
+      "w-full": !isListFormat,
+      "md:col-span-1": !isListFormat,
     }
   );
 
-  // Clases específicas para vista de lista
-  const listClasses = classNames(
-    commonClasses,
-    'grid grid-cols-1',
-    {
-      'md:grid-cols-3 gap-4': !isListView,
-    }
-  );
+  const cardContent = classnames({
+    "flex items-center": isListFormat, 
+    "h-full col-span-1 px-2 pt-4 pb-2": !isListFormat, 
+  });
 
+  const imgDivClass = classnames("relative",{
+      "w-[40%]":isListFormat
+  })
+
+  const textContentDivClass = classnames("flex flex-col justify-between max-h-[250px]   px-2 pt-4 pb-2", {
+    "w-[60%]": isListFormat
+  })
+
+  const likeContentClass = classnames("absolute p-2 bg-white rounded-full", {
+    "top-1 right-1": isListFormat,
+    "top-4 right-4": !isListFormat,
+
+  })
+
+  const parcelasClass = classnames({
+    "hidden": isListFormat,
+    "block": !isListFormat
+  })
+   // div img = w-[40%] -> en Card list 
+   // div info = w-[60%] -> en Card List
+   // Posicionamiento del corazon top-1 right-1 -> Card List  , En el otro top-4 right-4
   return (
-    <article role="article" className={isListView ? listClasses : cardClasses}>
-      {isListView ? (
-        <div className="grid grid-rows-1 md:grid-cols-3 h-full">
-          <div className="row-span-1 md:col-span-1">
-            <img
-              src={props.image}
-              alt={getCardTitle(props.brand, props.model)}
-              className="w-full rounded-xl"
-            />
+    <article role="article" className={articleClasses}>
+      <div className={cardContent}>
+        <div className={imgDivClass}>
+          <div className={likeContentClass}>
+            <Heart />
           </div>
-          <div className="flex flex-col justify-between max-h-[250px] h-full col-span-2 px-2 pt-4 pb-2">
+          <img
+            src={props.image}
+            alt={getCardTitle(props.brand, props.model)}
+            className={classnames(
+              "w-full rounded-xl object-cover aspect-square md:aspect-auto"
+            )}
+          />
+        </div>
+
+       {/* TODO: El mt-4 tiene que figurar solo en card-list */}
+        <div className={textContentDivClass}>
+          <div className="mt-4">
+            <div className="flex justify-start gap-2 mb-2">
+              <span className="px-2 py-[2px] text-xs bg-gray-200 rounded-[64px]">
+                {props.year}
+              </span>
+              <span className="px-2 py-[2px] text-xs bg-gray-200 rounded-[64px]">
+                {mileageConvert(props.mileage)}
+              </span>
+            </div>
             <div>
               <h2 className="text-base font-bold text-left text-gray-950">
                 {getCardTitle(props.brand, props.model)}
               </h2>
-              <h3 className="text-left text-descriptionCard line-clamp-2 font-semibold text-sm">
+              <h3 className="text-left text-descriptionCard line-clamp-2 font-light text-sm">
                 {props.version}
               </h3>
             </div>
-            <div>
-              <div className="mb-2">
-                <div className="pt-[10px] flex">
-                  <p className="text-orangePrice text-2xl font-medium">
-                    {currencyConvert(props.price)}
-                  </p>
-                </div>
-              </div>
-              <p className="mb-2 text-xs text-left text-gray-700 md:text-sm">
-                {props.city}, {props.state}
-              </p>
-            </div>
           </div>
-        </div>
-      ) : (
-        <div className="grid grid-rows-3 md:grid-cols-1 h-full">
-          <div className="absolute top-4 right-4 text-gold text-2xl cursor-pointer bg-white p-2 rounded-full">
-            <Heart />
-          </div>
-          <div className="row-span-3 md:col-span-1">
-            <img
-              src={props.image}
-              alt={getCardTitle(props.brand, props.model)}
-              className="w-full rounded-xl"
-            />
-          </div>
-          <div className="flex flex-col justify-between max-h-[250px] h-full col-span-1 px-2 pt-4 pb-2">
-            <div>
-              <div className="flex justify-start gap-2 mb-2">
-                <span className="px-2 py-[2px] text-xs bg-gray-200 rounded-[64px]">
-                  {props.year}
-                </span>
-                <span className="px-2 py-[2px] text-xs bg-gray-200 rounded-[64px]">
-                  {mileageConvert(props.mileage)}
-                </span>
-              </div>
-              <div>
-                <h2 className="text-base font-bold text-left text-gray-950">
-                  {getCardTitle(props.brand, props.model)}
-                </h2>
-                <h3 className="text-left text-descriptionCard line-clamp-2 font-semibold text-sm">
-                  {props.version}
-                </h3>
+          <div>
+            <div className="mb-2">
+              <div className="pt-[10px] flex">
+                <p className="text-orangePrice text-lg md:text-2xl font-medium">
+                  {currencyConvert(props.price)}
+                </p>
               </div>
             </div>
-            {!isMobile && (
-              <div>
+            <p className="mb-2 text-xs text-left text-gray-700 md:text-sm">
+              {props.city}, {props.state}
+            </p>
+              <div className={parcelasClass}>
                 <a
                   className="flex items-center justify-center gap-1 bg-buttonCard px-5 py-3 rounded-full text-xs font-bold text-left text-white md:text-sm min-h-[22px] h-full"
                   href="!#"
                 >
-                  <Parcelas size={isMobile ? '16' : '20'} />
+                  <Parcelas size={isMobile ? "16" : "20"} />
                   <span>Calcular Parcelas</span>
                 </a>
               </div>
-            )}
           </div>
         </div>
-      )}
+      </div>
     </article>
   );
 };
 
-export default CardToggle;
+export default Card;
