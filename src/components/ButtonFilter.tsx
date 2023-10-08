@@ -11,7 +11,7 @@ const ButtonFilter: React.FC<ButtonFilter> = ({onDeleteFilter, id}) => {
   return (
     <div className=" flex py-1 pl-1 pr-3 text-sm rounded-full border-2 border-buttonFilter text-buttonFilter">
         <span className="px-2">{capitalizeSentence(id)}</span>
-        <button onClick={() => onDeleteFilter(id)}><Close/></button>
+        <button onClick={() => onDeleteFilter(id)}><Close color="#94A4FF" width="16" height="16"/></button>
     </div>
   )
 }

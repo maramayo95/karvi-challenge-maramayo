@@ -1,22 +1,6 @@
 import { useQuery } from "react-query";
-import { Item } from "../interface/types";
+import { FetchData } from "../interface/types";
 
-type FilterOption = {
-  id: string;
-  name: string;
-  count: number;
-};
-
-type FetchData = {
-  availableFilters: {
-    city: FilterOption[];
-    brand: FilterOption[];
-    version: FilterOption[];
-    year: FilterOption[];
-    model: FilterOption[];
-  };
-  items: Item[];
-};
 
 async function fechData(): Promise<FetchData> {
   const response = await fetch(import.meta.env.VITE_URL);

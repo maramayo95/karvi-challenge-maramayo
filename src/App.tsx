@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import Card from "./components/Card";
+// import Card from "./components/Card";
 import useFetch from "./hooks/useFetch";
-import Accordion from "./components/Acordion";
+
 import Spinner from "./components/Spinner";
 import Pagination from "./components/Paginator";
 import { Item } from "./interface/types";
 import ButtonFilter from "./components/ButtonFilter";
 import CloseAll from "./components/CloseAll";
+import useFilter from "./hooks/useFilter";
+import FilterAcordionSection from "./components/FilterAcordionSection";
+
+import Card from "./components/Card";
+import MaisRevIcon from "./icons/MaisRevIcon";
+import MobileModal from "./components/MobileModal";
 
 type FilterSelection = {
   city: string[];
@@ -21,7 +27,13 @@ type FilterKey = keyof FilterSelection;
 
 function App() {
   const { data, isLoading, isError, error } = useFetch();
-
+  const {
+    handlerDeleteFilter,
+    handleDeleteAll,
+    filterToggleHandler,
+    selectedFilters,
+  } = useFilter();
+  // Pagination
   const [filteredItems, setFilteredItems] = useState<Item[] | undefined>(
     undefined
   );
@@ -35,25 +47,6 @@ function App() {
   };
 
   const itemToMap = paginatedItems();
-
-  const [selectedFilters, setSelectedFilters] = useState<FilterSelection>({
-    city: [],
-    brand: [],
-    version: [],
-    model: [],
-    year: [],
-  });
-
-  const filterToggleHandler = (
-    selectedOptions: string[],
-    filter: "city" | "brand" | "version" | "model" | "year"
-  ) => {
-    setSelectedFilters((prevState) => {
-      const newState = { ...prevState };
-      newState[filter] = selectedOptions;
-      return newState;
-    });
-  };
 
   useEffect(() => {
     const checkFilteredItems = data?.items.filter((car) => {
@@ -72,6 +65,7 @@ function App() {
     });
     setFilteredItems(checkFilteredItems);
   }, [data, selectedFilters]);
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -79,100 +73,71 @@ function App() {
     return <div>Error: {error instanceof Error}</div>;
   }
 
-  const accordionFilters: {
-    type: "brand" | "model" | "version" | "year" | "city";
-    title: string;
-  }[] = [
-    {
-      type: "brand",
-      title: "Marca",
-    },
-    {
-      type: "model",
-      title: "Modelo",
-    },
-    {
-      type: "version",
-      title: "Versión",
-    },
-    {
-      type: "year",
-      title: "Año",
-    },
-    {
-      type: "city",
-      title: "Ciudade",
-    },
-  ];
-  const handlerDeleteFilter = (filterKey: FilterKey, filterId: string) => {
-    setSelectedFilters((prevState) => {
-      const newState = { ...prevState };
-      newState[filterKey] = prevState[filterKey].filter((f) => f !== filterId);
-      return newState;
-    });
-  };
-
-  const handleDeleteAll = () => {
-    setSelectedFilters({
-      city: [],
-      brand: [],
-      version: [],
-      model: [],
-      year: [],
-    });
-  };
   return (
     <>
       <main className="m-auto w-full sm:container 2xl:max-w-screen-xl">
+
+        {/* TODO: Resolver handleDeleteAll y handleDeleteFilter que viene undefined */}
+        <MobileModal filterToggleHandler={filterToggleHandler}
+            selectedFilters={selectedFilters}
+            data={data}
+            handleDeleteAll={handleDeleteAll}
+            handlerDeleteFilter={handlerDeleteFilter}
+            />
+            
         <div className="flex flex-col md:flex-row ">
-          <aside className="px-5 py-3 md:max-w-[25%] md:w-full relative">
-            <section className="absolute w-full max-w-[calc(100%-40px)]">
-              {accordionFilters.map(({ type, title }) => (
-                <Accordion
-                  key={title}
-                  options={data?.availableFilters[type] ?? []}
-                  category={title}
-                  onSelectionUpdate={(selectedOptions) =>
-                    filterToggleHandler(selectedOptions, type)
-                  }
-                  selectedOptions={selectedFilters[type]}
-                />
-              ))}
-            </section>
-          </aside>
+          <FilterAcordionSection
+            filterToggleHandler={filterToggleHandler}
+            selectedFilters={selectedFilters}
+            data={data}
+          />
 
           <section className="flex flex-wrap  px-5 w-full ">
-            <div className="my-4 px-5">
-              <CloseAll onDeleteAll={handleDeleteAll} />
-              <div className="my-2 flex flex-wrap gap-2">
-                {Object.keys(selectedFilters)
-                  .map((filterKey) => filterKey as FilterKey)
-                  .map((filterKey) =>
-                    selectedFilters[filterKey].map((filterId) => (
-                      <div key={filterId}>
-                        {" "}
-                        <ButtonFilter
-                          id={filterId}
-                          onDeleteFilter={() =>
-                            handlerDeleteFilter(filterKey, filterId)
-                          }
-                        />
-                      </div>
-                    ))
-                  )}
-              </div>
+            <div className="my-4 px-5 w-full">
+              <section className="flex flex-wrap px-5 w-full items-start">
+                <div className="my-2 flex flex-wrap w-[80%] gap-2">
+                  {Object.keys(selectedFilters)
+                    .map((filterKey) => filterKey as FilterKey)
+                    .map((filterKey) =>
+                      selectedFilters[filterKey].map((filterId) => (
+                        <div key={filterId}>
+                          {" "}
+                          <ButtonFilter
+                            id={filterId}
+                            onDeleteFilter={() =>
+                              handlerDeleteFilter(filterKey, filterId)
+                            }
+                          />
+                        </div>
+                      ))
+                    )}
+                </div>
+                <div className="ml-auto">
+                  <CloseAll title = "Limpiar Filtros" onDeleteAll={handleDeleteAll} />
+                </div>
+              </section>
 
-              <div className="w-[100%] flex justify-between">
-                <h3 className="text-descriptionCard font-bold">
-                  {filteredItems?.length} carros encontrados
-                </h3>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center">
+                  <h3 className="text-descriptionCard font-bold">
+                    {filteredItems?.length} carros encontrados
+                  </h3>
+                </div>
+                <div className="flex items-center text-buttonFilterFont text-sm px-2 cursor-pointer">
+                  <button>
+                    <MaisRevIcon />
+                  </button>
+                  <span className="ml-1">Mais Relevantes</span>
+                </div>
               </div>
             </div>
+
             <div className=" flex flex-col justify-center md:flex-row  md:flex-wrap md:gap-4 md:px-5 md:w-full">
               {itemToMap?.map((car) => (
                 <Card key={car.id} {...car} />
               ))}
             </div>
+
             <Pagination
               items={filteredItems}
               itemsPerPage={itemsPerPage}

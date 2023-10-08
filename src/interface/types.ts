@@ -128,3 +128,42 @@ export interface APIRequest {
  export enum State {
   SP = "SP",
  }
+
+
+ export type FilterSelection = {
+  city: string[];
+  brand: string[];
+  version: string[];
+  model: string[];
+  year: string[];
+};
+
+export type FilterOption = {
+  id: string;
+  name: string;
+  count: number;
+};
+
+export type FetchData = {
+  availableFilters: {
+    city: FilterOption[];
+    brand: FilterOption[];
+    version: FilterOption[];
+    year: FilterOption[];
+    model: FilterOption[];
+  };
+  items: Item[];
+};
+
+export type FilterKey = keyof FilterSelection;
+
+export  type FilterAcordionProps = {
+  filterToggleHandler:  (
+      selectedOptions: string[],
+      filter: "city" | "brand" | "version" | "model" | "year"
+    ) => unknown;
+    handleDeleteAll?: () => unknown;
+    selectedFilters: FilterSelection;
+    handlerDeleteFilter?: (filterKey: FilterKey, filterId: string) => void;
+    data?: FetchData ;
+}

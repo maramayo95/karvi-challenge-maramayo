@@ -1,7 +1,7 @@
 
 const Trash = () => {
   return (
-    <div>
+    <>
       <svg
         width="16"
         height="18"
@@ -16,7 +16,7 @@ const Trash = () => {
           fill="#566DED"
         />
       </svg>
-    </div>
+    </>
   );
 };
 
