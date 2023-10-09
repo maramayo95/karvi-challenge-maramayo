@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { capitalizeSentence, getCardTitle, mileageConvert, currencyConvert, capitalizeFirstLetterInWords } from ".";
 
-// Capital Sentence
+
 test("capitalizeSentence", () => {
   test("given empty string should return empty string", () => {
     expect(capitalizeSentence("")).toBe("");
