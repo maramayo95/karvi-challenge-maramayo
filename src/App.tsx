@@ -106,7 +106,7 @@ function App() {
                 <div className="flex items-center text-buttonFilterFont text-sm px-2 cursor-pointer">
                   {isMobile ? (
                     <button onClick={toggleItemView}>
-                      {isListFormat ? <List /> : <CardViewIcon />}
+                      {isListFormat ? <CardViewIcon /> : <List/> }
                     </button>
                   ) : (
                     <>
