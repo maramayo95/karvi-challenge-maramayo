@@ -8,16 +8,16 @@ interface ButtonDeleteAll {
 
 const CloseAll: React.FC<ButtonDeleteAll> = ({ onDeleteAll, title }) => {
   return (
-    <div className="my-2 flex items-center w-[10%}">
+    <div className="my-2 flex  items-center w-[10%}">
       <button
-        className="text-buttonFilterFont text-sm px-2"
+        className="text-buttonFilterFont flex gap-2 text-sm px-2"
         onClick={() => onDeleteAll()}
       >
         {title}
-      </button>
-      <span className="ml-1">
+      <span className="">
         <Trash />
       </span>
+      </button>
     </div>
   );
 };
