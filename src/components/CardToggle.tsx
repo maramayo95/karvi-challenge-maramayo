@@ -81,7 +81,7 @@ const CardToggle = (props: ItemWithFormat) => {
         </div>
 
         <div className={textContentDivClass}>
-          <div className="mt-4">
+          <div className={isMobile ? "mt-4" : "mt-0"}>
             <div className="flex justify-start gap-2 mb-2">
               <span className="px-2 py-[2px] text-xs bg-gray-200 rounded-[64px]">
                 {props.year}
