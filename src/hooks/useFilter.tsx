@@ -72,7 +72,6 @@ const useFilter = (data?: FetchData) => {
 
   useEffect(() => {
     const checkFilteredItems = data?.items.filter((car) => {
-      console.log(selectedFilters.year, car.year);
       return (
         (!selectedFilters.city.length ||
           selectedFilters.city.includes(car.city)) &&
