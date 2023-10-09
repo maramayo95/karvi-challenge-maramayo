@@ -38,6 +38,95 @@ El proyecto también incluye funcionalidades adicionales:
 2. Instala las dependencias: `npm install`
 3. Inicia el proyecto: `npm start`
 
+# Documentación de pruebas
+Código para ejecutar los test
+```javascript
+ npm run test
+``` 
+##Documentación de Funciones 
+
+## capitalizeSentence
+
+Esta prueba verifica la función `capitalizeSentence` que capitaliza la primera letra de una cadena de texto.
+
+### Casos de prueba
+
+1. Cuando se le proporciona una cadena vacía, la función debería devolver una cadena vacía.
+
+    ```javascript
+    test("given empty string should return empty string", () => {
+      expect(capitalizeSentence("")).toBe("");
+    });
+    ```
+
+2. Cuando se le proporciona una cadena en mayúsculas, la función debería devolver la cadena en formato Pascal Case.
+
+    ```javascript
+    test("given capitalize string should return pascal case string", () => {
+      expect(capitalizeSentence("HONDA")).toBe("Honda");
+    });
+    ```
+
+3. Cuando se le proporciona una cadena en minúsculas, la función debería devolver la cadena en formato Pascal Case.
+
+    ```javascript
+    test("given lower string should return pascal case string", () => {
+      expect(capitalizeSentence("chevrolet")).toBe("Chevrolet");
+    });
+    ```
+
+## getCardTitle
+
+Esta prueba verifica la función `getCardTitle` que toma dos palabras y las convierte en minúsculas con la primera letra en mayúscula.
+
+### Caso de prueba
+
+Cuando se le proporcionan dos palabras en mayúsculas, la función debería devolver una cadena en formato "palabra palabra".
+
+```javascript
+test("Given two words and convert them in lower case and capitalize the first char of each one", () => {
+  expect(getCardTitle("TOYOTA", "CAMRRY")).toBe("Toyota Camrry");
+});
+```
+
+## CardToggle
+
+Esta prueba verifica el componente `CardToggle` que representa una tarjeta de detalles de un automóvil.
+
+### Configuración
+
+Antes de ejecutar la prueba, se configuran las propiedades del componente y se renderiza:
+
+```javascript
+beforeEach(() => {
+  const props = {
+    // Propiedades del automóvil
+    id: 3216581099,
+    city: CityEnum.Campinas,
+    state: State.SP,
+    year: "2016/2017",
+    brand: "CHEVROLET",
+    model: "PRISMA",
+    version: "1.4 MPFI LT 8V FLEX 4P MANUAL",
+    price: 58900,
+    mileage: 143611,
+    image:
+      "https://d7mrzff3jg2ye.cloudfront.net/br_importer/spyne/ASST-br_importer-01HBT81GJVCMFAFTVFS9F7CN14.jpg",
+    booking: false,
+    certificate: false,
+    financing: false,
+  };
+
+  render(
+    <CardToggle
+      isListFormat={false}
+      carType={CarType.Used}
+      promoted={false}
+      {...props}
+    />
+  );
+});
+
 
 ## Sitio 
 - Sitio donde figura el build: [Enlace al challenge](https://karvi-challenge-maramayo.vercel.app/)
