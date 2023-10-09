@@ -88,7 +88,7 @@ test("Given two words and convert them in lower case and capitalize the first ch
   expect(getCardTitle("TOYOTA", "CAMRRY")).toBe("Toyota Camrry");
 });
 ```
-## Función capitalizeFirstLetterInWords
+## capitalizeFirstLetterInWords
 
 Esta función toma una oración y convierte la primera letra de cada palabra en mayúscula y el resto de las letras en minúscula, manteniendo las palabras que comienzan con números sin cambios.
 
