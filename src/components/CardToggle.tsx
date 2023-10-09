@@ -75,7 +75,7 @@ const CardToggle = (props: ItemWithFormat) => {
             src={props.image}
             alt={getCardTitle(props.brand, props.model)}
             className={classnames(
-              "w-full rounded-xl object-cover aspect-square md:aspect-auto"
+              "w-full rounded-xl object-cover aspect-square md:aspect-auto max-h-[300px]"
             )}
           />
         </div>

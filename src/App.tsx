@@ -19,8 +19,6 @@ import { accordionFilters } from "./config/filterConfig";
 import FilterList from "./components/FilterList";
 
 
-
-
 function App() {
   const { data, isLoading, isError, error } = useFetch();
   const {
@@ -80,7 +78,7 @@ function App() {
             />
           )}
 
-          <section className="flex flex-wrap  px-5 w-full ">
+          <section className="flex flex-wrap justify-center px-5 w-full ">
             <div className="my-4 px-5 w-full">
               <section className="flex flex-wrap px-5 w-full items-start">
                 {
