@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FilterMobilePageProps } from "../interface/types";
 import MobileModal from "./MobileModal";
 import ButtonFilterMobile from "./ButtonFilterMobile";
@@ -16,7 +16,14 @@ const FilterMobilePage: React.FC<FilterMobilePageProps> = ({
   isFiltersEmpty,
 }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
+  useEffect(() => {
+    if(isModalOpen){
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
 
+    }
+  },[isModalOpen])
   return (
     <section className="sticky top-0 bg-white py-4 z-50">
       <div className="flex justify-evenly mt-6 ">
