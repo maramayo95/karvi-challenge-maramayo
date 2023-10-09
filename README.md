@@ -39,7 +39,10 @@ El proyecto también incluye funcionalidades adicionales:
 3. Inicia el proyecto: `npm start`
 
 # Documentación de pruebas
-
+Código para ejecutar los test
+```javascript
+ npm run test
+``` 
 ##Documentación de Funciones 
 
 ## capitalizeSentence
