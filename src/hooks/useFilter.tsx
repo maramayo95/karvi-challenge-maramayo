@@ -72,6 +72,7 @@ const useFilter = (data?: FetchData) => {
 
   useEffect(() => {
     const checkFilteredItems = data?.items.filter((car) => {
+      console.log(selectedFilters.year, car.year);
       return (
         (!selectedFilters.city.length ||
           selectedFilters.city.includes(car.city)) &&
@@ -82,7 +83,9 @@ const useFilter = (data?: FetchData) => {
         (!selectedFilters.model.length ||
           selectedFilters.model.includes(car.model)) &&
         (!selectedFilters.year.length ||
-          selectedFilters.year.includes(car.year))
+          car.year
+            .split("/")
+            .some((carYear) => selectedFilters.year.includes(carYear)))
       );
     });
     setFilteredItems(checkFilteredItems ?? []);
