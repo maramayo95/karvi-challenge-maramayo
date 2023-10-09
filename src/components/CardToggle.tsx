@@ -1,5 +1,5 @@
 import Parcelas from "../icons/Parcelas";
-import { currencyConvert, getCardTitle, mileageConvert } from "../utils/index";
+import { capitalizeFirstLetterInWords, currencyConvert, getCardTitle, mileageConvert } from "../utils/index";
 import Heart from "../icons/Heart";
 import classnames from "classnames"; // Importa classnames
 import { isMobile } from "react-device-detect";
@@ -94,8 +94,8 @@ const CardToggle = (props: ItemWithFormat) => {
               <h2 className="text-base font-bold text-left text-gray-950">
                 {getCardTitle(props.brand, props.model)}
               </h2>
-              <h3 className="text-left text-descriptionCard line-clamp-2 font-light text-sm">
-                {props.version}
+              <h3 className="text-left text-descriptionCard line-clamp-2 font-medium text-sm">
+                {capitalizeFirstLetterInWords(props.version)}
               </h3>
             </div>
           </div>

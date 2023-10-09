@@ -24,8 +24,18 @@ export const currencyConvert = (value: number, locale = "br") => {
           });
 };
 
-export const mileageConvert = (value: number) =>
-    value.toLocaleString("pt-BR") + " km";
+export const mileageConvert = (value: number) => value.toLocaleString("pt-BR") + " km";
 
+export const capitalizeFirstLetterInWords = (text:string) => {
+    const words = text.split(' ');
+    const result = words.map((word) => {
+      if (/[a-zA-Z]/.test(word)) {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      } else {
+        return word;
+      }
+    });
+    return result.join(' ');
+  }
 
   

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { capitalizeSentence, getCardTitle, mileageConvert, currencyConvert } from ".";
+import { capitalizeSentence, getCardTitle, mileageConvert, currencyConvert, capitalizeFirstLetterInWords } from ".";
 
 // Capital Sentence
 test("capitalizeSentence", () => {
@@ -36,3 +36,9 @@ test("currencyConvert", () => {
     expect(currencyConvert(2500.5, "ar")).toBe("$ 2.500,50")
   })
 })
+
+test("capitalizeFirstLetterInWords", () => {
+  test("Given a capitalized sentence and convert each first caracter in capital sentence and the another into lowercase", () => {
+    expect(capitalizeFirstLetterInWords('1.4 MPFI EFFECT 8V FLEX 4P MANUAL')).toBe("1.4 Mpfi Effect 8v Flex 4p Manual");
+  });
+});
