@@ -26,8 +26,6 @@ El proyecto cumple con los siguientes requerimientos:
 
 El proyecto también incluye funcionalidades adicionales:
 
-- Marcado de autos como favoritos.
-- Página adicional para mostrar autos marcados como favoritos.
 - Uso de TypeScript para el desarrollo.
 - Uso de estrategias adecuadas de renderizado.
 - Paginación de grilla con 12 elementos por página.
