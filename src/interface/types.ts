@@ -20,7 +20,7 @@ export interface Item {
   model: string;
   price: number;
   promoted: boolean;
-  rates: Rates;
+  rates?: Rates;
   state: State;
   version: string;
   year: string;

@@ -5,7 +5,7 @@ import classnames from "classnames"; // Importa classnames
 import { isMobile } from "react-device-detect";
 import { ItemWithFormat } from "../interface/types";
 
-const Card = (props: ItemWithFormat) => {
+const CardToggle = (props: ItemWithFormat) => {
   const isListFormat = props.isListFormat;
 
   const articleClasses = classnames(
@@ -56,12 +56,14 @@ const Card = (props: ItemWithFormat) => {
   const parcelasClass = classnames({
     "hidden": isListFormat,
     "block": !isListFormat
+    
   })
 
   const flexClassPrice = classnames("flex",{
     "pt-[10px]": !isListFormat
   })
  
+  
   return (
     <article role="article" className={articleClasses}>
       <div className={cardContent}>
@@ -124,4 +126,4 @@ const Card = (props: ItemWithFormat) => {
   );
 };
 
-export default Card;
+export default CardToggle;
