@@ -126,7 +126,7 @@ beforeEach(() => {
     />
   );
 });
-
+```
 
 ## Sitio 
 - Sitio donde figura el build: [Enlace al challenge](https://karvi-challenge-maramayo.vercel.app/)
@@ -134,11 +134,3 @@ beforeEach(() => {
 ## Autor
 
 Este proyecto fue desarrollado por Matias Aramayo.
-
-
-
-
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
