@@ -94,10 +94,13 @@ Esta función toma una oración y convierte la primera letra de cada palabra en 
 
 ```javascript
 const resultado = capitalizeFirstLetterInWords('1.4 MPFI EFFECT 8V FLEX 4P MANUAL');
+
+test("capitalizeFirstLetterInWords", () => {
+  test("Given a capitalized sentence and convert each first caracter in capital sentence and the another into lowercase", () => {
+    expect(capitalizeFirstLetterInWords('1.4 MPFI EFFECT 8V FLEX 4P MANUAL')).toBe("1.4 Mpfi Effect 8v Flex 4p Manual");
+  });
+});
 ```
-
-
-
 ## CardToggle
 
 Esta prueba verifica el componente `CardToggle` que representa una tarjeta de detalles de un automóvil.
