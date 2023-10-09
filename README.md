@@ -94,7 +94,7 @@ Esta función toma una oración y convierte la primera letra de cada palabra en 
 
 ```javascript
 const resultado = capitalizeFirstLetterInWords('1.4 MPFI EFFECT 8V FLEX 4P MANUAL');
-
+```
 
 
 
